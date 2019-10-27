@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cow
+spec:
+  containers:
+    - name: cow
+      image: cloudowski/krazy-cow:latest

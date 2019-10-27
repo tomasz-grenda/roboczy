@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: cow-milk
+
+  labels:
+    app: cow
+
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: cow
+      herd: purple
+  template:
+    metadata:
+      labels:
+        app: cow
+        herd: purple
+    spec:
+      # terminationGracePeriodSeconds: 5
+
+      containers:
+        - image: cloudowski/krazy-cow:latest
+          # imagePullPolicy: Always
+          name: cow
+
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 5
+
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 3
+            failureThreshold: 2
+
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 8443
+              name: https
+
+          env:
+            - name: KC_LOGGING_LEVEL
+              value: "DEBUG"
+            - name: KC_COW_SHEPHERD_REDISURL
+              value: redis.dairy:6379
+
+          volumeMounts:
+            - name: pasture
+              mountPath: /pasture
+
+      volumes:
+        - name: pasture
+          hostPath:
+            path: /meadow

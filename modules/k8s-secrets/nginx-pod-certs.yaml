@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-secret-certs
+spec:
+  containers:
+  - image: nginx:1.13-alpine
+    name: nginx
+    volumeMounts:
+    - name: secret-volume
+      mountPath: /etc/nginx/secret
+
+  volumes:
+  - name: secret-volume
+    secret:
+      secretName: nginx-certs

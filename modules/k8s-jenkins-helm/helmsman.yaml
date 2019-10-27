@@ -1,0 +1,38 @@
+metadata:
+  org: "orgX"
+  maintainer: "k8s-admin"
+
+settings:
+  kubeContext: "minikube"
+
+namespaces:
+  staging:
+  prod:
+    protected: true
+
+helmRepos:
+  stable: "https://kubernetes-charts.storage.googleapis.com"
+
+apps:
+
+  wiki-stage:
+    name: "dokuwiki-stage"
+    description: "dokuwiki"
+    namespace: "staging"
+    enabled: true
+    chart: "stable/dokuwiki"
+    version: "2.0.6"
+    valuesFile: "dokuwiki-staging-values.yaml"
+    purge: false
+    test: false
+
+  wiki-prod:
+    name: "dokuwiki-prod"
+    description: "dokuwiki"
+    namespace: "prod"
+    enabled: true
+    chart: "stable/dokuwiki"
+    version: "2.0.6"
+    valuesFile: "dokuwiki-prod-values.yaml"
+    purge: false
+    test: false

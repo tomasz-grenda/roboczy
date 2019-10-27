@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: fussy-scaled
+  labels:
+    app: fussy-scaled
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fussy-scaled
+  template:
+    metadata:
+      labels:
+        app: fussy-scaled
+    spec:
+      containers:
+      - name: fussy
+        image: cloudowski/fussy-container
+        ports:
+        - containerPort: 8080

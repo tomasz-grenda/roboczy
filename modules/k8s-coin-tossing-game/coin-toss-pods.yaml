@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: coin1
+  labels:
+      app: coin-toss
+spec:
+  restartPolicy: Never
+  containers:
+    - image: cloudowski/fussy-container:0.1
+      imagePullPolicy: Always
+      name: fussy
+      env:
+        - name: DELAY
+          value: bolt
+        - name: CRASH
+          value: coin
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: coin2
+  labels:
+      app: coin-toss
+spec:
+  restartPolicy: Never
+  containers:
+    - image: cloudowski/fussy-container:0.1
+      imagePullPolicy: Always
+      name: fussy
+      env:
+        - name: DELAY
+          value: bolt
+        - name: CRASH
+          value: coin
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: coin3
+  labels:
+      app: coin-toss
+spec:
+  restartPolicy: Never
+  containers:
+    - image: cloudowski/fussy-container:0.1
+      imagePullPolicy: Always
+      name: fussy
+      env:
+        - name: DELAY
+          value: bolt
+        - name: CRASH
+          value: coin
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: coin4
+  labels:
+      app: coin-toss
+spec:
+  restartPolicy: Never
+  containers:
+    - image: cloudowski/fussy-container:0.1
+      imagePullPolicy: Always
+      name: fussy
+      env:
+        - name: DELAY
+          value: bolt
+        - name: CRASH
+          value: coin

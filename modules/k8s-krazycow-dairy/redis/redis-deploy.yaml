@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-persistent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-persistent
+  template:
+    metadata:
+      labels:
+        app: redis-persistent
+    spec:
+      containers:
+        - name: redis
+          image: redis:5-alpine
+          args: ["--appendonly", "yes"]
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - mountPath: /data
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: dairy

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testvol-api
+  labels:
+      app: testvol
+      voltype: api
+      env: prod
+spec:
+  containers:
+  - image: nginx:1.13-alpine
+    name: test-container
+    volumeMounts:
+    - mountPath: /etc/podinfo
+      name: podinfo
+  volumes:
+   - name: podinfo
+     downwardAPI:
+       items:
+         - path: "labels"
+           fieldRef:
+             fieldPath: metadata.labels
+         - path: "annotations"
+           fieldRef:
+             fieldPath: metadata.annotations 

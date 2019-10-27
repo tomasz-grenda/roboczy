@@ -1,0 +1,112 @@
+Master:
+  Image: "jenkins/jenkins"
+  ImageTag: "lts"
+  #UseSecurity: true
+  UseSecurity: false
+  AdminUser: admin
+  AdminPassword: admin
+  ServicePort: 8080
+  # For minikube, set this to NodePort, elsewhere use LoadBalancer
+  # Use ClusterIP if your setup includes ingress controller
+  ServiceType: ClusterIP
+  #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
+  # Used to create Ingress record (should used with ServiceType: ClusterIP)
+  HostName: jenkins.192.168.99.100.nip.io
+  # NodePort: <to set explicitly, choose port between 30000-32767
+  # Enable Kubernetes Liveness and Readiness Probes
+  # ~ 2 minutes to allow Jenkins to restart when upgrading plugins. Set ReadinessTimeout to be shorter than LivenessTimeout.
+  #
+  ScriptApproval:
+    - "method groovy.json.JsonSlurperClassic parseText java.lang.String"
+    - "new groovy.json.JsonSlurperClassic"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods leftShift java.util.Map java.util.Map"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods split java.lang.String"
+    - "method java.util.Collection toArray"
+    - "staticMethod org.kohsuke.groovy.sandbox.impl.Checker checkedCall java.lang.Object boolean boolean java.lang.String java.lang.Object[]"
+    - "staticMethod org.kohsuke.groovy.sandbox.impl.Checker checkedGetProperty java.lang.Object boolean boolean java.lang.Object"
+  ContainerEnv:
+    - name: CASC_JENKINS_CONFIG
+      value: /var/jenkins_home/casc_configs/..data/jenkins.yaml
+
+
+
+  InstallPlugins:
+    - kubernetes-pipeline-aggregator:1.5
+    - kubernetes:1.12.0
+    - workflow-job:2.23
+    - workflow-aggregator:2.5
+    - credentials-binding:1.16
+    - git:3.9.1
+    - pipeline-github-lib
+    - configuration-as-code-support
+    - configuration-as-code
+    - blueocean
+  # Jenkins XML job configs to provision
+  Jobs: |-
+    fussy-pipeline: |-
+      <flow-definition plugin="workflow-job@2.23">
+          <description/>
+          <keepDependencies>false</keepDependencies>
+          <properties/>
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.54">
+          <script>
+          library identifier: 'cloudowski@devel', retriever: modernSCM( [$class: 'GitSCMSource', remote: 'https://github.com/cloudowski/cloudowski-pipeline-library'])
+
+          helmPipeline { 
+            appRepo = 'https://github.com/cloudowski/fussy-container' 
+            appName = 'fussy'
+          }
+          </script>
+          <sandbox>true</sandbox>
+          </definition>
+          <triggers/>
+          <disabled>false</disabled>
+      </flow-definition>
+    croc-hunter: |-
+      <flow-definition plugin="workflow-job@2.23">
+        <description/>
+        <keepDependencies>false</keepDependencies>
+        <properties/>
+        <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.54">
+        <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.1">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+        <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/lachie83/croc-hunter</url>
+        </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+        <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+        </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions/>
+        </scm>
+        <scriptPath>Jenkinsfile</scriptPath>
+        <lightweight>true</lightweight>
+        </definition>
+        <triggers/>
+        <disabled>false</disabled>
+      </flow-definition>
+  CustomConfigMap: false
+
+Persistence:
+  Enabled: true
+  AccessMode: ReadWriteOnce
+  Size: 2Gi
+  volumes:
+  - name: casc-config
+    configMap:
+      name: jenkins-casc-config
+  mounts:
+  - name: casc-config
+    mountPath: /var/jenkins_home/casc_configs
+    readOnly: true
+
+rbac:
+  install: true
+  serviceAccountName: default
+  roleRef: cluster-admin
+  roleBindingKind: ClusterRoleBinding

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-secret
+spec:
+  containers:
+  - image: nginx:1.13-alpine
+    name: nginx
+    env:
+    - name: NGINX_USER
+      valueFrom:
+        secretKeyRef:
+          name: nginx-secret
+          key: NGINX_USER
+    - name: NGINX_PASS
+      valueFrom:
+        secretKeyRef:
+          name: nginx-secret
+          key: NGINX_PASS

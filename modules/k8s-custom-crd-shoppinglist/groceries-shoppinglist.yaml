@@ -1,0 +1,10 @@
+apiVersion: cloudowski.com/v1
+kind: ShoppingList
+metadata:
+  name: groceries
+spec:
+  eggs: 12
+  milk: 
+    fat: "2%"
+    count: 1
+  buns: 4

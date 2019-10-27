@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: cow
+  labels:
+    app: cow
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cow
+  template:
+    metadata:
+      labels:
+        app: cow
+    spec:
+      containers:
+        - name: cow
+          image: cloudowski/krazy-cow
+          ports:
+            - containerPort: 8080
+              name: http

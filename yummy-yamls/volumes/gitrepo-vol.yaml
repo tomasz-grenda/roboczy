@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: gitserver
+spec:
+  containers:
+    - image: nginx
+      name: nginx
+      volumeMounts:
+      - mountPath: /git
+        name: git-volume
+  volumes:
+    - name: git-volume
+      gitRepo:
+        repository: "https://github.com/cloudowski/docker-flaskdemo.git"

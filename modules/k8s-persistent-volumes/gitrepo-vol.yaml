@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: gitserver
+    labels:
+        app: gitserver
+spec:
+  containers:
+    - image: k8s.gcr.io/test-webserver
+      name: webserver
+      volumeMounts:
+      - mountPath: /git
+        name: git-volume
+  volumes:
+    - name: git-volume
+      gitRepo:
+        repository: "https://github.com/cloudowski/fussy-container.git"

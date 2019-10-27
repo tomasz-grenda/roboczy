@@ -1,0 +1,12 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pasture
+spec:
+  # set to empty to disable dynamic provisioning using StorageClass
+  storageClassName: "green-and-big"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi

@@ -1,0 +1,14 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-host1
+  labels:
+    type: host
+spec:
+  # set to empty to disable dynamic provisioning using StorageClass
+  storageClassName: "supercheap"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

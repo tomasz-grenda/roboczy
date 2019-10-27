@@ -1,0 +1,12 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nfs-server
+spec:
+  # set to empty to disable dynamic provisioning using StorageClass
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

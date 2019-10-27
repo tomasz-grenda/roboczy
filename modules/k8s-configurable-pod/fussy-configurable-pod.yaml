@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fussy-configurable
+spec:
+  containers:
+  - image: cloudowski/fussy-container:latest
+    name: fussy
+    envFrom:
+    - configMapRef:
+        name: fussy-config

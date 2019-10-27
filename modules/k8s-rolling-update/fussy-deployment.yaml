@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fussy
+  labels:
+    deploy: fussy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      deploy: fussy
+  template:
+    metadata:
+      labels:
+        deploy: fussy
+    spec:
+      containers:
+        - name: fussy
+          image: cloudowski/fussy-container:0.2
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 3

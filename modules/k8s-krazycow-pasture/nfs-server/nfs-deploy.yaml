@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: nfs-server
+  template:
+    metadata:
+      labels:
+        role: nfs-server
+    spec:
+      initContainers:
+        - name: init-nfsvols
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              'for i in $(seq 1 10);do VOL=/exports/vol$i; echo "$VOL init"; [ -d $VOL ] || mkdir $VOL;done',
+            ]
+          volumeMounts:
+            - mountPath: /exports
+              name: nfsvol
+      containers:
+        - name: nfs-server
+          image: gcr.io/google_containers/volume-nfs:0.8
+          ports:
+            - name: nfs
+              containerPort: 2049
+              protocol: TCP
+            - name: mountd
+              containerPort: 20048
+              protocol: TCP
+            - name: rpcbind
+              containerPort: 111
+              protocol: UDP
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /exports
+              name: nfsvol
+      volumes:
+        - name: nfsvol
+          # for testing purposes only
+          # emptyDir: {}
+          persistentVolumeClaim:
+            claimName: nfs-server
