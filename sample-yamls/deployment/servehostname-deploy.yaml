@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servehostname
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        tier: web
+        app: serverhostname
+    spec:
+      containers:
+        - name: serverhostname
+          image: gcr.io/google_containers/serve_hostname
+          args:
+            - "-port=8000"
+          ports:
+            - containerPort: 8000
+              name: web

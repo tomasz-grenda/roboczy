@@ -1,0 +1,18 @@
+alertmanager:
+  enabled: true
+  ingress:
+    enabled: true
+    hosts:
+      - prom-alertmanager.192.168.99.100.nip.io
+# server:
+#     ingress:
+#       enabled: true
+#       hosts: []
+#   #      - prom.192.168.99.100.nip.io
+
+kubeStateMetrics:
+  enabled: true
+nodeExporter:
+  enabled: true
+pushgateway:
+  enabled: truee

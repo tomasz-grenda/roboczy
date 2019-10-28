@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-redirect-to: "http://pudelek.pl"
+  name: movies
+  namespace: default
+spec:
+  rules:
+  - host: movies.192.168.99.100.nip.io
+    http:
+      paths:
+      - backend:
+          serviceName: kubernetes
+          servicePort: 443
+        path: /

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: counter1
+spec:
+  containers:
+  - name: count
+    image: ubuntu:16.04
+    args: [bash, -c, 
+           'for ((i = 0; ; i++)); do echo "$i: $HOSTNAME $(date)"; echo "${i} STDERR: ts=$(date +%s)" >&2; sleep 1; done']
+    resources:
+      limits:
+        memory: 200Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi

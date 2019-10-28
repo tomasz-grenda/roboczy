@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: flaskdemo
+spec:
+  ports:
+    - port: 8080
+
+  selector:
+      app: flaskdemo
+  type: NodePort

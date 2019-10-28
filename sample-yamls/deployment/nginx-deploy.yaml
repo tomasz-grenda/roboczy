@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mynginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        tier: web
+        app: nginx
+    spec:
+      containers:
+        - name: mynginx
+          image: nginx:1.9.1
+          ports:
+            - containerPort: 80
+              name: web
