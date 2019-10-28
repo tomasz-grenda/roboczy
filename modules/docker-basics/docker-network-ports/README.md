@@ -35,7 +35,7 @@ Map ports manually (`-p` option). Pick **8081,8082,8083** for host ports mapped 
 
 ```
 docker run -d -p 8081:80 nginx
-docker run -d -p 8082:8080 traefik --web
+docker run -d -p 8082:8080 traefik --web #<-- doesn't work at the moment
 docker run -d -p 8083:80 httpd
 ```
 
