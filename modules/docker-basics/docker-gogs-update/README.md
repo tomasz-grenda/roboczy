@@ -18,7 +18,7 @@ Now configure it manually using [http://localhost:8082](http://localhost:8082):
 
 * Change `Database type` to SQlite3
 * Change database `Path` to `/data/gogs.db`
-* Change `Application URL*` to **http://localhost:8082**
+* Change `Application URL` to **http://localhost:8082**
 * Change `Log Path` to `/data/gogs/log`
 * On welcome screen click **Register** in the upper right corner and create a user
 
