@@ -41,7 +41,7 @@ jenkins when it's ready.
 Now you will add configuration using ConfigMaps stored in [casc/](casc/). They will be immediately applied by a special sidecar container running alongside Jenkins.
 
 ```
-kubectl apply -f casc-configmap.yaml -n jenkins
+kubectl apply -f casc/ -n jenkins
 ```
 
 5. Logging in
