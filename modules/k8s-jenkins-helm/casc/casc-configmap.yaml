@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins-casc-creds
+  labels:
+    jenkins-jenkins-config: "true"
+data:
+  jenkins.yaml: |+
+    credentials:
+      system:
+        domainCredentials:
+          - credentials:
+              - usernamePassword:
+                  scope:    GLOBAL
+                  id:       dockerhub
+                  username: root
+                  password: toor
