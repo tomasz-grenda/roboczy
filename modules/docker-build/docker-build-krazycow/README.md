@@ -1,6 +1,6 @@
 # 1. Trap a cow in a container image
 
-**1)** Clone a repo with code [https://gitlab.com/cloudowski/krazy-cow](https://gitlab.com/cloudowski/krazy-cow)
+**1)** Clone a repo with code [https://github.com/cloudowski/krazy-cow](https://github.com/cloudowski/krazy-cow)
 
 **2)** Open `web/templates/index.html` file and change body style - use different color for background, text or ad custom style. You can also may want to change other components: color of the grass, font type, alignment or other.
 
