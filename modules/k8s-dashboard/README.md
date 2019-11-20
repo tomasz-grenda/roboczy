@@ -12,7 +12,7 @@ Notice it will work only with minikube while first method should work on any Kub
 
 Make sure you use **default** namespace (see the *Namespace* list on the left pane)
 
-* Click on the **Create** button on the right upper corner
+* Click on the **+** button on the right upper Ū
 * Choose **Create an app** tab
 * Use **ghost:latest** image and name your app **ghost** as well
 * Set memory reservation to **100MiB** using advanced options
