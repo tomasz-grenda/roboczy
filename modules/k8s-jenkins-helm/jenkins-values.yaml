@@ -65,6 +65,7 @@ master:
     - gitlab
     - simple-theme-plugin
     - ansicolor
+    - configuration-as-code
 
   # Enable to always override the installed plugins with the values of 'master.installPlugins' on upgrade or redeployment.
   # overwritePlugins: true
