@@ -41,7 +41,7 @@ kubectl config set-context CONTEXT_NAME
 To change context set by minikube just type
 
 ```shell
-kubectl config set-context minikube
+kubectl config use-context minikube
 ```
 
 ## Change default namespace
