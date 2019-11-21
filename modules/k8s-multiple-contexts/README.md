@@ -51,3 +51,9 @@ To change the default namespace use the following command
 ```shell
 kubectl config set-context $(kubectl config current-context) --namespace=NAMESPACE_NAME_HERE
 ```
+
+Another example - for minikube context set context to kube-system: 
+
+```shell
+kubectl config set-context minikube --namespace=kube-system
+```
