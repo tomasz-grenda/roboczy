@@ -23,7 +23,8 @@ Then merge these two files into single one and save the output to your default
 (Linux/Mac)
 
 ```shell
-kubectl config view --merge --raw > ~/.kube/config
+kubectl config view --merge --raw > ~/.kube/config.new
+cp ~/.kube/config.new ~/.kube/config
 ```
 
 Now in every session you will have access to all contexts.
